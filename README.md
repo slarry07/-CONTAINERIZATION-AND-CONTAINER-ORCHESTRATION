@@ -286,13 +286,13 @@ git add .
 git commit -m "Added files"
 git push
 ```
-![](./images/01.created%20directory,%20files,%20git%20add,%20commit%20&%20push.png)
+
 
 ## Step 2: Dockerize the Application
 I decided to containerize and orchestrate the application on an EC2 instance. I creeated an instance, started it and connected to it.
 
 SSH into Ec2 instance.
-![](./images/02.ssh%20into%20ec2%20instance.png)
+
 
 ## Tasks:
 1. Creating dockerfile.
@@ -304,7 +304,7 @@ SSH into Ec2 instance.
 touch dockerfile
 vim dockerfile
 ```
-![](./images/03.created%20capstone%20folder%20for%20dockerfile&%20index.html%20files.png)
+
 
 In the dockerfile specify nginx as the base image & copy index.html and the styles.css into the Nginx HTML directory.
 ![](./images/04.vi%20dockerfile.png)
@@ -317,7 +317,7 @@ This Dockerfile sets up a Docker image based on NGINX, a popular web server.
 
 -  `WORKDIR /usr/share/nginx/html`: This command sets the working directory within the NGINX container to /usr/share/nginx/html. This directory is typically where NGINX serves static HTML files from.
 
--  `COPY Signup_page`: This line copies the contents in that folder which is the index.html file & style.css file in the Signup_page directory from the build context (the directory where the Dockerfile is located) into the /usr/share/nginx/html directory within the container. 
+-  `COPY webapp`: This line copies the contents in that folder which is the index.html file & style.css file in the Signup_page directory from the build context (the directory where the Dockerfile is located) into the /usr/share/nginx/html directory within the container. 
 
 - `EXPOSE 80`: This command exposes port 80 on the container. Port 80 is the default port for HTTP traffic, so by exposing it, we allow external clients to access our NGINX server running inside the container.
 
@@ -346,7 +346,7 @@ docker run -p 8080:80 dockerfile
 5. Check the list of available containers. Start a container and confirm it's running.
 ```bash
 docker ps -a
-docker start 19f13ddec815
+docker start 
 docket ps
 ```
 
@@ -361,9 +361,9 @@ docket ps
 
 1. Tag image! I already have a dockerhub account, I'll tag my image using my username and repository name then push.
 ```bash 
-docker tag dockerfile devoyinda/my-capstone-proj-6:1.0
+docker tag dockerfile webapp
 ```
-![](./images/12.tag%20image.png)
+
 
 2. Login to docker hub
 ```bash
@@ -373,8 +373,7 @@ docker login -u username
 
 3. Push the image to docker hub
 ``` bash
-docker push devoyinda/my-capstone-proj-6:1.0
-```
+docker push webapp
 
 
 ## Step 4: Set up a Kind Kubernetes Cluster
@@ -447,7 +446,7 @@ vim kub-deployment.yaml
 ```
 
 
-This YAML configuration defines a Kubernetes Deployment named `signup-page` that manages a single replica of a containerized application. Let's break it down:
+This YAML configuration defines a Kubernetes Deployment named `webapp` that manages a single replica of a containerized application. Let's break it down:
 
 `apiVersion`: apps/v1: This specifies the API version being used. In this case, it's apps/v1, which is commonly used for managing higher-level abstractions like Deployments, StatefulSets, and DaemonSets.
 
@@ -455,7 +454,7 @@ This YAML configuration defines a Kubernetes Deployment named `signup-page` that
 
 `metadata`: Contains metadata about the Deployment, such as its name.
 
-`name`: `signup-page`: The name of the Deployment.
+`name`: webapp: The name of the Deployment.
 `spec`: Describes the desired state of the Deployment, including how many replicas of the application should be running and how to define the pods.
 
 `replicas:` 1: Specifies that there should be one replica of the application running. Kubernetes will ensure that this many instances of the application are running at all times.
@@ -472,9 +471,9 @@ template: Specifies the pod template that Kubernetes will use to create new pods
 
 `containers`: Describes the containers that should be run in the pod.
 
-`name`: `signup-page-container`: The name of the container.
+`name`: `webapp-container`: The name of the container.
 
-`image`: devoyinda/capstone_proj_6_doc_and_kub:1.0: Specifies the Docker image to use for the container. The image devoyinda/capstone_proj_6_doc_and_kub is being used with the 1.0 tag, indicating the version of the image - This is the image we pushed to the dockerhub.
+`image`: slarry07/webapp:lastest Specifies the Docker image to use for the container. The image devoyinda/capstone_proj_6_doc_and_kub is being used with the 1.0 tag, indicating the version of the image - This is the image we pushed to the dockerhub.
 
 `ports`: Specifies the ports to expose on the container.
 
