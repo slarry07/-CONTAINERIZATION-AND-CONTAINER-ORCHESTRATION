@@ -329,19 +329,19 @@ Build an image using the dockerfile just created.
 ```bash
 docker build -t dockerfile .
 ```
-![](./images/05.build%20image%20using%20dockerfile.png)
+
 
 3. Check the images list to verify the dockerfile image is already created
 ```bash
 docker images 
 ```
-![](./images/06.check%20images.png)
+
 
 4. Run a container based on the image created and map it to a listening port
 ```bash
 docker run -p 8080:80 dockerfile
 ```
-![](./images/07.run%20container%20based%20on%20the%20image.png)
+
 
 5. Check the list of available containers. Start a container and confirm it's running.
 ```bash
@@ -349,14 +349,11 @@ docker ps -a
 docker start 19f13ddec815
 docket ps
 ```
-![](./images/08.check%20list%20of%20containers.png)
 
-![](./images/09.start%20container%20and%20confirm%20its%20running.png)
 
 6. Copy and paste the EC2 instance public IP Address including the port to view the webpage.
 
-![](./images/10.get%20public%20ip%20of%20ec2%20instance.png)
-
+![
 ![](./images/11.using%20ip-address%20and%20port%2080.png)
 
 ## Step 3: Push to Dockerhub
@@ -370,15 +367,15 @@ docker tag dockerfile devoyinda/my-capstone-proj-6:1.0
 
 2. Login to docker hub
 ```bash
-docker login -u devoyinda
+docker login -u username
 ```
-![](./images/13.login%20to%20docker%20hub.png)
+
 
 3. Push the image to docker hub
 ``` bash
 docker push devoyinda/my-capstone-proj-6:1.0
 ```
-![](./images/14.push%20image%20to%20docker%20hub.png)
+
 
 ## Step 4: Set up a Kind Kubernetes Cluster
 
@@ -394,11 +391,10 @@ curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
 chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 ```
-![](./images/15.To%20install%20kind.png)
 ```bash
 kind version
 ```
-![](./images/16.Verify%20kind%20version.png)
+
 
 2. Create a Kind Cluster
 - Create a directory capstone-kind
@@ -417,28 +413,28 @@ After creating cluster, you can verify that the cluster is running by executing:
 kubectl cluster-info
 ```
 
-![](./images/17.create%20kind%20cluster%20and%20verify%20cluster%20works.png)
+
 
 
 3. Install kubectl
 ```bash
 sudo snap install kubectl --classic
 ```
-![](./images/18.kubectl%20installed.png)
+
 
 4. Configure kubectl to point to the kind cluster
 
 ```bash
 kubectl cluster-info --context kind-kind
 ```
-![](./images/19.to%20configure%20kubectl%20to%20point%20to%20kind%20cluster.png)
+
 
 
 5. Get cluster nodes
 ```bash
 kubectl get nodes
 ```
-![](./images/20.get%20cluster%20nodes.png)
+
 
 ## Step 5: Deploy to Kubernetes
 ## Tasks:
@@ -449,7 +445,7 @@ Write a Kubernetes Deployment configuration in a YAML file. This file describes 
 touch kub-deployment.yaml
 vim kub-deployment.yaml
 ```
-![](./images/21.%20create%20deployment%20yaml%20file.png)
+
 
 This YAML configuration defines a Kubernetes Deployment named `signup-page` that manages a single replica of a containerized application. Let's break it down:
 
@@ -492,8 +488,6 @@ touch kub-service.yaml
 vim kub-service.yaml
 ```
 
-![](./images/22.%20create%20service%20yaml%20file.png)
-
 
 3. Apply the deployment and service to the cluster
 ```bash
@@ -501,8 +495,7 @@ kubectl apply -f kub-deployment.yaml
 kubectl apply -f service.yaml
 ```
 
-![](./images/23.%20apply%20the%20deployment%20to%20cluster.png)
-![](./images/24.%20apply%20service%20to%20my%20cluster.png)
+
 
 4. Verify Deployment and Service - After applying the YAML files, you can verify that the resources have been created successfully by running:
 ```bash
@@ -524,16 +517,15 @@ Once you have identified the pod, you can use the kubectl port-forward command t
 Replace `<pod-name>` with the name of your pod, `<local-port>` with the port on your local machine you want to use to access the application, and `<pod-port>` with the port your application is listening on within the pod.
 
 ```bash
-kubectl port-forward service/signup-page-service 8080:80
+ kubectl port-forward --address 0.0.0.0 service/myweb-service 8081:80
 ```
+<img width="894" height="215" alt="image" src="https://github.com/user-attachments/assets/c608eaaf-85d0-40da-914f-f13475c5ec9e" />
 
-![](./images/26.%20port%20forwarding.png)
 
 2. Access the website through your browser on port 8080
 
 In your browser, visit http://localhost:8080 to view your static website.
 
-![](./images/27.%20view%20website.png)
 
 
 
