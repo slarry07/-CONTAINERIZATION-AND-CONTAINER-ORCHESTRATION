@@ -1,4 +1,4 @@
-# CAPSTONE PROJECT 6: CONTAINERIZATION AND CONTAINER ORCHESTRATION
+CONTAINERIZATION AND CONTAINER ORCHESTRATION
 
 ## Project Scenario
 In this project, I will be containerizing a simple static website (HTML & CSS) for a company's sign-up page. This application will be containerised using docker, deployed to kubernetes cluster and accessed using nginx.
@@ -536,28 +536,5 @@ In your browser, visit http://localhost:8080 to view your static website.
 ![](./images/27.%20view%20website.png)
 
 
-# CONCLUSION
-This project effectively demonstrated the power of containerization and orchestration in deploying a static web application. By containerizing the frontend with Docker, we encapsulated all necessary dependencies, ensuring consistent deployment across various environments. 
-The integration of Kubernetes further highlighted its capabilities in container management, scaling, and deployment within a highly available cluster environment. The project emphasized the simplicity and efficiency of using Nginx as a web server, paired with Kubernetes as a robust platform for managing containerized workloads. Port-forwarding the Kubernetes service enabled local access to the deployed application, completing the full lifecycle of containerization and orchestration. The website is successfully containerized, deployed on Kubernetes, and accessible from a browser, demonstrating the end-to-end process of using Docker and Kubernetes for containerization and orchestration.
-
-In conclusion, this capstone project provides a solid foundation for deploying web applications using modern technologies like Docker and Kubernetes—both of which are essential for scaling applications in today’s cloud-native environments.
-
-
-### `TROUBLESHOOTING ISSUES`
-
-Originally, in the service.yaml file, my type was cluster IP.
-
-I wasn't able to view my website externally.
-My configuration creates a ClusterIP service, which is only accessible from within the Kubernetes cluster. If I want to access this service externally (from an EC2 instance or any other location outside the cluster), I’ll need to change the type of the service to either NodePort or LoadBalancer.
-
-- I changed mine from ClusterIP to `LoadBalancer`.
-
-(Recommended for Cloud Environments)
-If you’re running Kubernetes on a cloud provider like AWS, and your cluster supports load balancers, you can set the service type to LoadBalancer. This will automatically provision an external IP that you can use to access the service.
-
-![](./images/28.%20using%20loadbalancer%20type.png)
-
-- Check Security Group Settings
-Ensured that the EC2 instance’s security group allows inbound traffic on the required port (e.g., 30007 for NodePort or `80 for LoadBalancer`). This step is essential to make the service accessible externally.
 
 ![](./images/29.%20check%20port%2080.png)
